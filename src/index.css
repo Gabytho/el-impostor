@@ -451,9 +451,11 @@ select.input {
 .hold-btn {
   user-select: none;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   -webkit-touch-callout: none;
-  touch-action: none;
   -webkit-tap-highlight-color: transparent;
+  touch-action: none;
   transition:
     transform 0.15s,
     background 0.15s;
@@ -1374,4 +1376,22 @@ select.input {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--danger);
+}
+/* Evitar selección de texto y menú contextual en toda la app */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Permitir selección solo en inputs y textareas (nombres de jugadores, palabras, etc.) */
+input,
+textarea {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }

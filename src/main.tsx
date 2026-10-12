@@ -24,3 +24,10 @@ createRoot(document.getElementById("root")!).render(
     </ErrorBoundary>
   </StrictMode>,
 );
+// Evitar el menú contextual (copiar/pegar) en toda la app
+document.addEventListener("contextmenu", (e) => {
+  const target = e.target as HTMLElement;
+  // Permitir en inputs para que se pueda pegar
+  if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
+  e.preventDefault();
+});

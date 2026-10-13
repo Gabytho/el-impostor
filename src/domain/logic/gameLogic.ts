@@ -39,11 +39,16 @@ export function buildPlayers(names: string[]): Player[] {
   }));
 }
 
+export interface AssignResult {
+  players: Player[];
+  realWord: string;
+  impostorWord: string;
+}
 export function assignRolesAndWords(
   players: Player[],
   config: GameConfig,
   wordPairs: WordPair[],
-): Player[] {
+): AssignResult {
   const pool = wordPairs.filter((w) => w.categoryId === config.categoryId);
   if (pool.length === 0) {
     throw new Error("No hay palabras en esta categoría");
@@ -55,7 +60,7 @@ export function assignRolesAndWords(
     shuffled.slice(0, config.impostorCount).map((p) => p.id),
   );
 
-  return players.map((p) => {
+  const updatedPlayers = players.map((p) => {
     const isImpostor = impostorIds.has(p.id);
     const role: Role = isImpostor ? "IMPOSTOR" : "PLAYER";
     let word: string | null = pair.realWord;
@@ -70,6 +75,12 @@ export function assignRolesAndWords(
       score: 0,
     };
   });
+
+  return {
+    players: updatedPlayers,
+    realWord: pair.realWord,
+    impostorWord: pair.impostorWord,
+  };
 }
 
 export function pickStartingPlayer(players: Player[]): string {
@@ -161,15 +172,17 @@ export function rebuildGameForRematch(
   wordPairs: WordPair[],
 ): GameState {
   const cleanPlayers = resetPlayersForRematch(game.players);
-  const withRoles = assignRolesAndWords(cleanPlayers, game.config, wordPairs);
+  const result = assignRolesAndWords(cleanPlayers, game.config, wordPairs);
   const startingPlayerId =
     game.config.startMode === "RANDOM"
-      ? pickStartingPlayer(withRoles)
-      : (withRoles[0]?.id ?? null);
+      ? pickStartingPlayer(result.players)
+      : (result.players[0]?.id ?? null);
 
   return {
     ...game,
-    players: withRoles,
+    players: result.players,
+    realWord: result.realWord,
+    impostorWord: result.impostorWord,
     phase: "REVEAL",
     currentRevealIndex: 0,
     startingPlayerId,

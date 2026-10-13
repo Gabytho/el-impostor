@@ -60,6 +60,8 @@ export interface GameState {
   roundNumber: number;
   lastEliminatedId: string | null;
   winner: Winner | null;
+  realWord: string | null;
+  impostorWord: string | null;
 }
 
 export interface GameHistoryEntry {

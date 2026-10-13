@@ -1395,3 +1395,42 @@ textarea {
   -ms-user-select: text;
   user-select: text;
 }
+
+/* Par de palabras en Game Over */
+.words-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.word-pair-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  gap: 12px;
+}
+
+.word-pair-item.impostor {
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.word-pair-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.word-pair-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.word-pair-item.impostor .word-pair-value {
+  color: #f87171;
+}

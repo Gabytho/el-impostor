@@ -46,6 +46,25 @@ export default function GameOverScreen() {
           {game.roundNumber !== 1 ? "s" : ""}
         </p>
       </div>
+      <section className="card">
+        <div className="card-header">
+          <h3>Palabras de la partida</h3>
+        </div>
+        <div className="words-pair">
+          <div className="word-pair-item">
+            <span className="word-pair-label">Jugadores</span>
+            <span className="word-pair-value">{game.realWord ?? "—"}</span>
+          </div>
+          <div className="word-pair-item impostor">
+            <span className="word-pair-label">Impostores</span>
+            <span className="word-pair-value">
+              {game.config.impostorMode === "NO_WORD"
+                ? "Sin palabra"
+                : (game.impostorWord ?? "—")}
+            </span>
+          </div>
+        </div>
+      </section>
 
       <section className="card">
         <div className="card-header">

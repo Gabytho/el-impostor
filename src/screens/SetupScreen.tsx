@@ -101,17 +101,17 @@ export default function SetupScreen() {
       scoringEnabled,
     };
 
-    const withRoles = assignRolesAndWords(players, config, wordPairs);
+    const result = assignRolesAndWords(players, config, wordPairs);
     const startingPlayerId =
       startMode === "RANDOM"
-        ? pickStartingPlayer(withRoles)
-        : (withRoles[0]?.id ?? null);
+        ? pickStartingPlayer(result.players)
+        : (result.players[0]?.id ?? null);
 
     saveLastPlayers(names);
 
     setGame({
       config,
-      players: withRoles,
+      players: result.players,
       phase: "REVEAL",
       currentRevealIndex: 0,
       startingPlayerId,
@@ -119,6 +119,8 @@ export default function SetupScreen() {
       roundNumber: 1,
       lastEliminatedId: null,
       winner: null,
+      realWord: result.realWord,
+      impostorWord: result.impostorWord,
     });
 
     navigate("/reveal");

@@ -146,12 +146,6 @@ export default function EliminationScreen() {
         >
           {isImpostor ? "IMPOSTOR" : "JUGADOR"}
         </h1>
-        <div className="elim-word-box">
-          <p className="elim-word-label">
-            {isImpostor ? "Su palabra era" : "Su palabra era"}
-          </p>
-          <p className="elim-word">{eliminated.word ?? "Sin palabra"}</p>
-        </div>
       </div>
       <div className="round-footer">
         <button

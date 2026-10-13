@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../domain/state/GameContext";
-import { loadWordPairs, loadCategories } from "../data/storage/storage";
-import { rebuildGameForRematch } from "../domain/logic/gameLogic";
+import {
+  loadWordPairs,
+  loadCategories,
+  saveLastPlayers,
+} from "../data/storage/storage";
+//import { rebuildGameForRematch } from "../domain/logic/gameLogic";
 
 export default function GameOverScreen() {
   const navigate = useNavigate();
@@ -21,10 +25,9 @@ export default function GameOverScreen() {
   const sortedByScore = [...game.players].sort((a, b) => b.score - a.score);
 
   const handleRematch = () => {
-    const wordPairs = loadWordPairs();
-    const next = rebuildGameForRematch(game, wordPairs);
-    setGame(next);
-    navigate("/reveal");
+    saveLastPlayers(game.players.map((p) => p.name));
+    setGame(null);
+    navigate("/setup");
   };
 
   const handleHome = () => {
